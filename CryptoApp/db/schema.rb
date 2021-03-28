@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(version: 2021_03_28_173018) do
     t.string "CS_apikey"
     t.float "CS_value"
     t.datetime "date"
+    t.integer "wallet_id", null: false
+    t.integer "CBought_id"
+    t.integer "CSold_id"
+    t.index ["CBought_id"], name: "index_transactions_on_CBought_id"
+    t.index ["CSold_id"], name: "index_transactions_on_CSold_id"
+    t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,5 +55,8 @@ ActiveRecord::Schema.define(version: 2021_03_28_173018) do
     t.index ["user_id"], name: "index_wallets_on_user_id"
   end
 
+  add_foreign_key "transactions", "coins", column: "CBought_id"
+  add_foreign_key "transactions", "coins", column: "CSold_id"
+  add_foreign_key "transactions", "wallets"
   add_foreign_key "wallets", "users"
 end
