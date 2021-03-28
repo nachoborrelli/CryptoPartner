@@ -425,6 +425,7 @@ fabric.properties
 CryptoApp/node_modules/
 .DS_Store
 
-CryptoApp/db/
+CryptoApp/db/development.sqlite3
+CryptoApp/db/test.sqlite3
 CryptoApp/config/master.key
 .idea

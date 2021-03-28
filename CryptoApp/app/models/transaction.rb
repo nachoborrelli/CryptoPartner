@@ -3,6 +3,6 @@ class Transaction < ApplicationRecord
   # CSold, CS_apikey, CSvalue
   # Date, (?)
   belongs_to :wallet, foreing_key:'wallet_id'
-  #TODO has_one :coin, 
-
+  belongs_to :CBought, class_name: 'coin', :foreign_key => 'CBought_id'
+  belongs_to :CSold, class_name: 'coin', :foreign_key => 'CSold_id'
 end
