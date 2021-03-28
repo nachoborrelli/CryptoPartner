@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  resources :coins
+  resources :wallets
+  resources :transactions
   root to: "home#index"
   
   devise_for :users
