@@ -1,6 +1,9 @@
 class WalletsController < ApplicationController
   before_action :set_wallet, only: %i[ show edit update destroy ]
 
+  #TODO limitar operaciones que se pueden hacer sobre una billetera
+
+
   # GET /wallets or /wallets.json
   def index
     @wallets = Wallet.all
