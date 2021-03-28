@@ -7,7 +7,18 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    
+    <% if user_signed_in? %>
+      <li class="nav-item">
+        <%= link_to "#{current_user.username}", edit_user_registration_path,:class=>"nav-link active" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Log Out", destroy_user_session_path, method: :delete,:class=>"nav-link active" %>
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <%= link_to "Log In", new_user_session_path ,:class=>"nav-link active"%>
+      </li>
+      <% end %>
   </head>
 
   <body>
