@@ -426,3 +426,5 @@ CryptoApp/node_modules/
 .DS_Store
 
 CryptoApp/db/
+CryptoApp/config/master.key
+.idea
