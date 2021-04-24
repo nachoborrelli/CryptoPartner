@@ -1,0 +1,2 @@
+class WalletCoin < ApplicationRecord
+end

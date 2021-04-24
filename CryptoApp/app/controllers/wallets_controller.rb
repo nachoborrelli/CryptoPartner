@@ -6,7 +6,7 @@ class WalletsController < ApplicationController
 
   # GET /wallets or /wallets.json
   def index
-    @wallets = Wallet.all
+    @wallet = current_user.wallet
   end
 
   # GET /wallets/1 or /wallets/1.json
@@ -14,9 +14,9 @@ class WalletsController < ApplicationController
   end
 
   # GET /wallets/new
-  def new
-    @wallet = Wallet.new
-  end
+  # def new
+  #   @wallet = Wallet.new
+  # end
 
   # GET /wallets/1/edit
   def edit
@@ -24,8 +24,9 @@ class WalletsController < ApplicationController
 
   # POST /wallets or /wallets.json
   def create
-    @wallet = Wallet.new(wallet_params)
-
+    if current_user.id != nil
+      @wallet = Wallet.new(wallet_params)
+      end
     respond_to do |format|
       if @wallet.save
         format.html { redirect_to @wallet, notice: "Wallet was successfully created." }
