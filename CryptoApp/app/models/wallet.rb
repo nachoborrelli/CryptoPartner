@@ -1,7 +1,7 @@
 class Wallet < ApplicationRecord
   belongs_to :user,foreign_key: 'user_id'
-  has_many :transaction, reverse_of: :wallet
-  has_many :coin
+  has_many :transactions, inverse_of: :wallet
+  has_many :coins
 
   def add_coins
     #TODO esta operacion marca el agregado de monedas a una billetera, para usarse cuando

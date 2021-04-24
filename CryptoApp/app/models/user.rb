@@ -6,5 +6,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
+  after_create :create_wallet
 
+  def create_global
+    self.wallet.create()
+  end
 end
