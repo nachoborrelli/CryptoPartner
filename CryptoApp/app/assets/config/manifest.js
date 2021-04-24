@@ -1,3 +1,4 @@
-//= link_tree ../images
+//= require_tree .
 //= link_directory ../stylesheets .css
-//= require ../js
+//= require bootstrap_sb_admin_base_v2
+//= requiere ../js

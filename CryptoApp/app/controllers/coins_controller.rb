@@ -4,6 +4,7 @@ class CoinsController < ApplicationController
   # GET /coins or /coins.json
   def index
     @coins = Coin.all
+    @best_coins_by_market_cap = get_best_coins_by_market_cap()
   end
 
   # GET /coins/1 or /coins/1.json
@@ -55,6 +56,35 @@ class CoinsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  def get_best_coins_by_market_cap(amount=10)
+    response = Excon.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=#{amount}&page=1&sparkline=false")
+    return nil if response.status != 200
+    JSON.parse(response.body)
+  end
+
+
+  def get_trending_coins
+    response = Excon.get("https://api.coingecko.com/api/v3/search/trending")
+    return nil if response.status != 200
+    JSON.parse(response.body)
+
+  end
+
+  def parsed_trending_coins
+    json = get_trending_coins()
+    coinsList = []
+    json["coins"].each { |coin| coinsList.push((coin["item"]))}
+
+    puts coinsList
+
+    return coinsList
+
+  end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
