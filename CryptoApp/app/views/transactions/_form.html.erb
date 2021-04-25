@@ -41,6 +41,11 @@
     <%= form.number_field :CS_amount, step: :any %>
   </div>
 
+  <div class="field">
+    <%= form.label :date, "Date: " %>
+    <%= form.date_field :born_on %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
