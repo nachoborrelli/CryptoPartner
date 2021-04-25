@@ -11,6 +11,36 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :CB_apikey, "You bought: "%>
+    <%= form.select :CB_apikey, @selectiveCoins, :prompt => 'Select One'%>
+  </div>
+
+  <div class="field">
+    <%= form.label :CB_value, "Value: " %>
+    <%= form.number_field :CB_value, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CB_amount, "Amount: " %>
+    <%= form.number_field :CB_amount, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CS_apikey, "You sold: " %>
+    <%= form.select :CS_apikey, @selectiveCoins, :prompt => 'Select One'%>
+  </div>
+
+  <div class="field">
+    <%= form.label :CS_value, "Value: " %>
+    <%= form.number_field :CS_value, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CS_amount, "Amount: " %>
+    <%= form.number_field :CS_amount, step: :any %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

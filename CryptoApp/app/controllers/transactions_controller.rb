@@ -3,7 +3,8 @@ class TransactionsController < ApplicationController
 
   # GET /transactions or /transactions.json
   def index
-    @transactions = Transaction.all
+    @transactions = current_user.wallet.transactions
+
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -13,15 +14,16 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
+    @selectiveCoins = get_selective_coins()
   end
 
-  # GET /transactions/1/edit
-  def edit
-  end
+  # # GET /transactions/1/edit
+  # def edit
+  # end
 
   # POST /transactions or /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
+    @transaction = Transaction.new(transaction_params.merge(wallet_id: current_user.wallet.id))
 
     respond_to do |format|
       if @transaction.save
@@ -56,6 +58,18 @@ class TransactionsController < ApplicationController
     end
   end
 
+
+  def get_selective_coins()
+    response = Excon.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false")
+    return nil if response.status != 200
+    totalInformation =  JSON.parse(response.body)
+    coins = []
+    totalInformation.each {|coin| coins.push([coin["name"], coin["id"]])}
+    return coins
+  end
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
@@ -64,6 +78,6 @@ class TransactionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transaction_params
-      params.fetch(:transaction, {})
+      params.fetch(:transaction, {}).permit('wallet_id')
     end
 end

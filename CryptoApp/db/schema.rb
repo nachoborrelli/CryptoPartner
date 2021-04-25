@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_28_212826) do
+ActiveRecord::Schema.define(version: 2021_04_24_215754) do
 
   create_table "coins", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2021_03_28_212826) do
     t.integer "wallet_id", null: false
     t.integer "CBought_id"
     t.integer "CSold_id"
+    t.float "CB_amount"
+    t.float "CS_amount"
     t.index ["CBought_id"], name: "index_transactions_on_CBought_id"
     t.index ["CSold_id"], name: "index_transactions_on_CSold_id"
     t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
