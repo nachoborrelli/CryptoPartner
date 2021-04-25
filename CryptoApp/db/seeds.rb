@@ -5,3 +5,4 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+coins = Coin.create(api_key: 'usd', api_name: 'US Dollars', api_symbol:'usd')

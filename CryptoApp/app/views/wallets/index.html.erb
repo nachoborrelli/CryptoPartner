@@ -8,10 +8,15 @@
   </thead>
 
   <tbody>
-  <% if @wallet.coins == nil %>
+  <% if @wallet.wallet_coins.empty?%>
     <p> You have no coins.</p>
   <% else %>
-
+    <%= @wallet.wallet_coins.each do |wc| %>
+      <tr>
+        <td> <%=wc.coin["api_key"] %></td>
+        <td> <%=wc.coin["api_name"] %> </td>
+      </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>

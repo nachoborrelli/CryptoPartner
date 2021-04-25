@@ -23,6 +23,7 @@ class WalletsController < ApplicationController
   end
 
   # POST /wallets or /wallets.json
+=begin
   def create
     if current_user.id != nil
       @wallet = Wallet.new(wallet_params)
@@ -37,6 +38,7 @@ class WalletsController < ApplicationController
       end
     end
   end
+=end
 
   # PATCH/PUT /wallets/1 or /wallets/1.json
   def update
