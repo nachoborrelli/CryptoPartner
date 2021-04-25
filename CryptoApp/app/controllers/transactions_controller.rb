@@ -23,6 +23,10 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
+    @selectiveCoins = get_selective_coins()
+    puts "###############################"
+    cb = transaction_params["CB_apikey"]
+    cs = transaction_params["CS_apikey"]
     @transaction = Transaction.new(transaction_params.merge(wallet_id: current_user.wallet.id))
 
     respond_to do |format|
@@ -78,6 +82,6 @@ class TransactionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transaction_params
-      params.fetch(:transaction, {}).permit('wallet_id')
+      params.fetch(:transaction, {}).permit('wallet_id', 'CB_apikey','CB_value', 'CB_amount', 'CS_apikey', 'CS_value', 'CS_amount')
     end
 end
