@@ -17,7 +17,7 @@
         <td>Amount: <%= wallet_coin.amount %> </td>
         <td><%= link_to 'Show', wallet_coin %></td>
         <td><%= link_to 'Edit', edit_wallet_coin_path(wallet_coin) %></td>
-        <td><%= link_to 'Destroy', wallet_coin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', wallet_coin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

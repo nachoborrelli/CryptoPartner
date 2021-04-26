@@ -7,9 +7,8 @@ class Coin < ApplicationRecord
     if not Coin.exists?(api_key: apikey)
       response = Excon.get("https://api.coingecko.com/api/v3/coins/#{apikey}")
       return nil if response.status != 200
-      totalInformation =  JSON.parse(response.body)[0]  
-
-      nuevaMoneda =  Coin.create(api_key: apikey, api_name: totalInformation["symbol"], api_symbol: totalInformation["name"])
+      totalInformation =  JSON.parse(response.body)
+      nuevaMoneda =  Coin.create(api_key: apikey, api_name: totalInformation["name"], api_symbol: totalInformation["symbol"])
       return nuevaMoneda.id
     end
     return Coin.find_by(api_key: apikey).id

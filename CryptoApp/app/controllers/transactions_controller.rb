@@ -14,17 +14,14 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
-    @selectiveCoins = Coin.get_selective_coins()
   end
 
-  # # GET /transactions/1/edit
-  # def edit
-  # end
+  # GET /transactions/1/edit
+  def edit
+  end
 
   # POST /transactions or /transactions.json
   def create
-    @selectiveCoins = Coin.get_selective_coins()
-
     cb = Coin.create_from_api(transaction_params["CB_apikey"])
     cs = Coin.create_from_api(transaction_params["CS_apikey"])
 
@@ -58,10 +55,18 @@ class TransactionsController < ApplicationController
 
   # DELETE /transactions/1 or /transactions/1.json
   def destroy
-    @transaction.destroy
+    puts "####################!!!!!!!!########################"
+    puts @transaction.id
     respond_to do |format|
-      format.html { redirect_to transactions_url, notice: "Transaction was successfully destroyed." }
-      format.json { head :no_content }
+      if @transaction.destroy
+        format.html { redirect_to transactions_url, notice: "Transaction was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        puts "####################!!!!!!!!########################"
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+      end
+
     end
   end
 
@@ -70,6 +75,7 @@ class TransactionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
       @transaction = Transaction.find(params[:id])
+      @selectiveCoins = Coin.get_selective_coins()
     end
 
     # Only allow a list of trusted parameters through.

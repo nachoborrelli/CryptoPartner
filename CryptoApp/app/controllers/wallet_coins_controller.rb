@@ -13,7 +13,6 @@ class WalletCoinsController < ApplicationController
   # GET /wallet_coins/new
   def new
     @wallet_coin = WalletCoin.new
-    @selectiveCoins = Coin.get_selective_coins()
   end
 
   # GET /wallet_coins/1/edit
@@ -22,8 +21,6 @@ class WalletCoinsController < ApplicationController
 
   # POST /wallet_coins or /wallet_coins.json
   def create
-
-    @selectiveCoins = Coin.get_selective_coins()
     coin = Coin.create_from_api(wallet_coin_params["coin_apikey"])
     new_wallet_coin_params = wallet_coin_params.merge(wallet_id: current_user.wallet.id, coin_id: coin).except(:coin_apikey)
     @wallet_coin = WalletCoin.new(new_wallet_coin_params)
@@ -80,6 +77,7 @@ class WalletCoinsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_wallet_coin
       @wallet_coin = WalletCoin.find(params[:id])
+      @selectiveCoins = Coin.get_selective_coins()
     end
 
     # Only allow a list of trusted parameters through.
