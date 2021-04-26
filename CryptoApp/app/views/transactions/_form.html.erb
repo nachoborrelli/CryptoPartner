@@ -13,37 +13,37 @@
 
   <div class="field">
     <%= form.label :CB_apikey, "You bought: "%>
-    <%= form.select :CB_apikey, @selectiveCoins, include_blank: 'Select One'%>
+    <%= form.select :CB_apikey, @selectiveCoins, :required => true, include_blank: 'Select One'%>
   </div>
 
   <div class="field">
     <%= form.label :CB_value, "Value: " %>
-    <%= form.number_field :CB_value, step: :any %>
+    <%= form.number_field :CB_value, step: :any, :required => true %>
   </div>
 
   <div class="field">
     <%= form.label :CB_amount, "Amount: " %>
-    <%= form.number_field :CB_amount, step: :any %>
+    <%= form.number_field :CB_amount, step: :any, :required => true %>
   </div>
 
   <div class="field">
     <%= form.label :CS_apikey, "You sold: " %>
-    <%= form.select :CS_apikey, @selectiveCoins, include_blank: 'Select One'%>
+    <%= form.select :CS_apikey, @selectiveCoins, include_blank: 'Select One', :required => true%>
   </div>
 
   <div class="field">
     <%= form.label :CS_value, "Value: " %>
-    <%= form.number_field :CS_value, step: :any %>
+    <%= form.number_field :CS_value, step: :any, :required => true %>
   </div>
 
   <div class="field">
     <%= form.label :CS_amount, "Amount: " %>
-    <%= form.number_field :CS_amount, step: :any %>
+    <%= form.number_field :CS_amount, step: :any, :required => true %>
   </div>
 
   <div class="field">
     <%= form.label :date, "Date: " %>
-    <%= form.date_field :born_on %>
+    <%= form.date_field :date, :required => true, max: Date.today %>
   </div>
 
   <div class="actions">

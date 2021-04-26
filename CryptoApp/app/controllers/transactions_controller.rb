@@ -27,8 +27,10 @@ class TransactionsController < ApplicationController
 
     cb = Coin.create_from_api(transaction_params["CB_apikey"])
     cs = Coin.create_from_api(transaction_params["CS_apikey"])
-    
+
     @transaction = Transaction.new(transaction_params.merge(wallet_id: current_user.wallet.id, CBought_id: cb, CSold_id: cs))
+
+    puts @transaction
 
     respond_to do |format|
       if @transaction.save
@@ -62,7 +64,7 @@ class TransactionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
