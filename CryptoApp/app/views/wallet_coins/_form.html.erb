@@ -1,0 +1,27 @@
+<%= form_with(model: wallet_coin) do |form| %>
+  <% if wallet_coin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(wallet_coin.errors.count, "error") %> prohibited this wallet_coin from being saved:</h2>
+
+      <ul>
+        <% wallet_coin.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :coin_apikey, "Coin: "%>
+    <%= form.select :coin_apikey, @selectiveCoins, include_blank: 'Select One'%>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount, "Amount: " %>
+    <%= form.number_field :amount, step: :any %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

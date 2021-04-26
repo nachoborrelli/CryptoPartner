@@ -18,9 +18,11 @@ class WalletsController < ApplicationController
   #   @wallet = Wallet.new
   # end
 
+=begin
   # GET /wallets/1/edit
   def edit
   end
+=end
 
   # POST /wallets or /wallets.json
 =begin
@@ -40,6 +42,7 @@ class WalletsController < ApplicationController
   end
 =end
 
+=begin
   # PATCH/PUT /wallets/1 or /wallets/1.json
   def update
     respond_to do |format|
@@ -61,6 +64,7 @@ class WalletsController < ApplicationController
       format.json { head :no_content }
     end
   end
+=end
 
   private
     # Use callbacks to share common setup or constraints between actions.

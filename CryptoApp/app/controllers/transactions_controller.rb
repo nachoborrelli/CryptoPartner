@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction = Transaction.new
-    @selectiveCoins = get_selective_coins()
+    @selectiveCoins = Coin.get_selective_coins()
   end
 
   # # GET /transactions/1/edit
@@ -23,16 +23,12 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    @selectiveCoins = get_selective_coins()
+    @selectiveCoins = Coin.get_selective_coins()
 
     cb = Coin.create_from_api(transaction_params["CB_apikey"])
     cs = Coin.create_from_api(transaction_params["CS_apikey"])
-
-    puts cb,cs
-
+    
     @transaction = Transaction.new(transaction_params.merge(wallet_id: current_user.wallet.id, CBought_id: cb, CSold_id: cs))
-
-    puts @transaction
 
     respond_to do |format|
       if @transaction.save
@@ -66,18 +62,7 @@ class TransactionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-
-  def get_selective_coins()
-    response = Excon.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false")
-    return nil if response.status != 200
-    totalInformation =  JSON.parse(response.body)
-    coins = []
-    totalInformation.each {|coin| coins.push([coin["name"], coin["id"]])}
-    return coins
-  end
-
-
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

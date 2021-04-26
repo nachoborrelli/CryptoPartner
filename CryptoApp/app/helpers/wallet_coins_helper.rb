@@ -1,0 +1,2 @@
+module WalletCoinsHelper
+end

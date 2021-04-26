@@ -11,14 +11,16 @@
   <% if @wallet.wallet_coins.empty?%>
     <p> You have no coins.</p>
   <% else %>
-    <%= @wallet.wallet_coins.each do |wc| %>
+    <p>Coins:</p>
+    <% @wallet.wallet_coins.each do |wc| %>
       <tr>
-        <td> <%=wc.coin["api_key"] %></td>
-        <td> <%=wc.coin["api_name"] %> </td>
+        <td> <%= wc %></td>
       </tr>
     <% end %>
   <% end %>
   </tbody>
 </table>
 
-<br>
+<%= link_to 'New Transaction', new_transaction_path %>
+<%= link_to 'Add Coins', add_wallet_coin_path	 %>
+<%= link_to 'Add USD', add_usd_wallet_coin_path	 %>
