@@ -55,14 +55,11 @@ class TransactionsController < ApplicationController
 
   # DELETE /transactions/1 or /transactions/1.json
   def destroy
-    puts "####################!!!!!!!!########################"
-    puts @transaction.id
     respond_to do |format|
       if @transaction.destroy
         format.html { redirect_to transactions_url, notice: "Transaction was successfully destroyed." }
         format.json { head :no_content }
       else
-        puts "####################!!!!!!!!########################"
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @transaction.errors, status: :unprocessable_entity }
       end
