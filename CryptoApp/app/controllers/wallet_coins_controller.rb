@@ -13,6 +13,7 @@ class WalletCoinsController < ApplicationController
   # GET /wallet_coins/new
   def new
     @wallet_coin = WalletCoin.new
+    @selectiveCoins = Coin.get_selective_coins()
   end
 
   # GET /wallet_coins/1/edit

@@ -17,4 +17,14 @@ class Wallet < ApplicationRecord
   def buy_coin
     #TODO esta operacion se utiliza cuando en una transaccion se compra una moneda
   end
+
+
+  def update_coins_after_transaction(cBough, cBAmount, cSold, cSAmount)
+    puts "########################################################################"
+    puts self.wallet_coins.find(cBough.id)
+    puts "########################################################################"
+    puts self.wallet_coins.class
+    puts cBough, cBAmount, cSold, cSAmount
+  end
+
 end
