@@ -2,29 +2,47 @@ class Wallet < ApplicationRecord
   belongs_to :user,foreign_key: 'user_id'
   has_many :transactions, inverse_of: :wallet
   has_many :wallet_coins, inverse_of: :wallet
-  
-
-  def add_coins
-    #TODO esta operacion marca el agregado de monedas a una billetera, para usarse cuando
-    # se compran cripto a partir de fiats ( monedas fisicas )
-    # 
-  end
-  
-  def sell_coin
-    #TODO esta operacion se utiliza cuando en una transaccion se vende una moneda
-  end
-  
-  def buy_coin
-    #TODO esta operacion se utiliza cuando en una transaccion se compra una moneda
-  end
 
 
-  def update_coins_after_transaction(cBough, cBAmount, cSold, cSAmount)
-    puts "########################################################################"
-    puts self.wallet_coins.find(cBough.id)
-    puts "########################################################################"
-    puts self.wallet_coins.class
-    puts cBough, cBAmount, cSold, cSAmount
+  def retrieve_WCoin(coin)
+    if self.wallet_coins.exists?(coin_id: coin.id)
+      self.wallet_coins.find_by(coin_id: coin.id)
+    else
+      newWC = WalletCoin.new(wallet_id: self.id, coin_id: coin.id, amount: 0)
+      newWC.save()
+
+      puts newWC.id
+    end
+  end
+
+  def update_coins_after_transaction_new(cBough, cBAmount, cSold, cSAmount)
+    cs = retrieve_WCoin(cSold)
+    if cs.amount - cSAmount < 0
+      puts "jaja"      #Como le aviso al usuario que no le alcanza?
+    else
+      cs.amount = cs.amount - cSAmount
+    end
+
+    cb = retrieve_WCoin(cBough)
+    cb.amount = cb.amount + cBAmount
+
+    cs.save()
+    cb.save()
+
+
+  end
+
+
+  def downgrade_former_values(cBought, cB_amount, cSold, cS_amount)
+    cb = retrieve_WCoin(cBought)
+    cs = retrieve_WCoin(cSold)
+
+    cb.amount = cb.amount - cB_amount
+    cs.amount = cs.amount + cS_amount
+
+    cs.save()
+    cb.save()
+
   end
 
 end

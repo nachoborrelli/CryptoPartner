@@ -28,8 +28,6 @@ class TransactionsController < ApplicationController
 
     @transaction = Transaction.new(transaction_params.merge(wallet_id: current_user.wallet.id, CBought_id: cb, CSold_id: cs))
 
-    puts @transaction
-
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to @transaction, notice: "Transaction was successfully created." }
@@ -43,8 +41,11 @@ class TransactionsController < ApplicationController
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
   def update
+    cb = Coin.create_from_api(transaction_params["CB_apikey"])
+    cs = Coin.create_from_api(transaction_params["CS_apikey"])
+
     respond_to do |format|
-      if @transaction.update(transaction_params)
+      if @transaction.update_values(transaction_params.merge(wallet_id: current_user.wallet.id, CBought_id: cb, CSold_id: cs))
         format.html { redirect_to @transaction, notice: "Transaction was successfully updated." }
         format.json { render :show, status: :ok, location: @transaction }
       else
