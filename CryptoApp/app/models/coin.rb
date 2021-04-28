@@ -3,15 +3,13 @@ class Coin < ApplicationRecord
   has_many :transactions
   # has_many :wallet_coins #CHECK
 
-  def self.create_from_api(apikey)
-    puts "###############################################################"
-    puts Coin.exists?(api_key: apikey)
-    puts "###############################################################"
+  def self.retrieve_from_api(apikey) #Por que las def empiezan con self?
+
     if not Coin.exists?(api_key: apikey)
       response = Excon.get("https://api.coingecko.com/api/v3/coins/#{apikey}")
       return nil if response.status != 200
       totalInformation =  JSON.parse(response.body)
-      puts api_key: apikey, api_name: totalInformation["name"], api_symbol: totalInformation["symbol"]
+
       nuevaMoneda =  Coin.create(api_key: apikey, api_name: totalInformation["name"], api_symbol: totalInformation["symbol"])
       return nuevaMoneda.id
     end

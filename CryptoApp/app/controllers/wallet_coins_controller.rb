@@ -22,7 +22,7 @@ class WalletCoinsController < ApplicationController
 
   # POST /wallet_coins or /wallet_coins.json
   def create
-    coin = Coin.create_from_api(wallet_coin_params["coin_apikey"])
+    coin = Coin.retrieve_from_api(wallet_coin_params["coin_apikey"])
     new_wallet_coin_params = wallet_coin_params.merge(wallet_id: current_user.wallet.id, coin_id: coin).except(:coin_apikey)
     @wallet_coin = WalletCoin.new(new_wallet_coin_params)
 
@@ -37,19 +37,32 @@ class WalletCoinsController < ApplicationController
     end
   end
 
-  def add_usd
-    new_wallet_coin_params = wallet_coin_params.merge(wallet_id: current_user.wallet.id, coin_id: Coin.usd.id).except(:coin_apikey)
-    @wallet_coin = WalletCoin.new(new_wallet_coin_params)
+
+  def save_USDs
+    #new_wallet_coin_params = wallet_coin_params.merge(wallet_id: current_user.wallet.id, coin_id: Coin.usd.id).except(:coin_apikey)
+    #@wallet_coin = WalletCoin.new(new_wallet_coin_params)
+    puts "MIRA ACA ABAJOOOOOOO!!!"
+    puts Coin.usd.id
+    @wallet_coin = current_user.wallet.retrieve_WCoin(Coin.usd)
+    @wallet_coin.amount = @wallet_coin.amount + 0
+    puts wallet_coin_params
 
     respond_to do |format|
       if @wallet_coin.save
-        format.html { redirect_to @wallet_coin, notice: "Wallet coin was successfully created." }
+        format.html { redirect_to @wallet_coin, notice: "You have added your USDs successfully." }
         format.json { render :show, status: :created, location: @wallet_coin }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @wallet_coin.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+
+  def add_usd
+    render html: "wallet_coins/add_usd"
+    render json: @wallet_coin
+
   end
 
   # PATCH/PUT /wallet_coins/1 or /wallet_coins/1.json
@@ -77,7 +90,8 @@ class WalletCoinsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_wallet_coin
-      @wallet_coin = WalletCoin.find(params[:id])
+      @wallet_coin = WalletCoin.find(9)
+      #@wallet_coin = WalletCoin.find(params[:id])
       @selectiveCoins = Coin.get_selective_coins()
     end
 
