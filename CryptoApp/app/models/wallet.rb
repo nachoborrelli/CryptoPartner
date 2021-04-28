@@ -8,17 +8,21 @@ class Wallet < ApplicationRecord
     if self.wallet_coins.exists?(coin_id: coin.id)
       self.wallet_coins.find_by(coin_id: coin.id)
     else
-      newWC = WalletCoin.new(wallet_id: self.id, coin_id: coin.id, amount: 0)
-      newWC.save()
-
-      puts newWC.id
+      newWC = WalletCoin.create(wallet_id: self.id, coin_id: coin.id, amount: 0)
     end
   end
-
+  
+  def validate_transaction(cSold, csAmount)
+    cs = retrieve_WCoin(cSold)
+    if cs.amount - cSAmount < 0
+      return true
+    end
+  end
   def update_coins_after_transaction_new(cBough, cBAmount, cSold, cSAmount)
     cs = retrieve_WCoin(cSold)
     if cs.amount - cSAmount < 0
       puts "jaja"      #Como le aviso al usuario que no le alcanza?
+      return false
     else
       cs.amount = cs.amount - cSAmount
     end
@@ -28,8 +32,7 @@ class Wallet < ApplicationRecord
 
     cs.save()
     cb.save()
-
-
+    
   end
 
 

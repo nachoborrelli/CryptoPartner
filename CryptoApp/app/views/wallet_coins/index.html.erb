@@ -1,28 +1,34 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Wallet Coins</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @wallet_coins.each do |wallet_coin| %>
+<% if @wallet_coins.empty? %>
+  <p> You have no coins.</p>
+<% else %>
+  <table>
+    <thead>
       <tr>
-        <td>Name: <%= wallet_coin.api_key %> </td>
-        <td>Abr: <%= wallet_coin.api_name %> </td>
-        <td>Amount: <%= wallet_coin.amount %> </td>
-        <td><%= link_to 'Show', wallet_coin %></td>
-        <td><%= link_to 'Edit', edit_wallet_coin_path(wallet_coin) %></td>
-        <td><%= button_to 'Destroy', wallet_coin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @wallet_coins.each do |wallet_coin| %>
+        <% if not wallet_coin.nil? %>
+        <tr>
+          <td>Name: <%= wallet_coin.api_key %> </td>
+          <td>Abr: <%= wallet_coin.api_name %> </td>
+          <td>Amount: <%= wallet_coin.amount %> </td>
+          <td><%= link_to 'Show', wallet_coin %></td>
+          <td><%= link_to 'Edit', edit_wallet_coin_path(wallet_coin) %></td>
+          <td><%= button_to 'Destroy', wallet_coin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+
+  </table>
+<% end %>
 
 <br>
 
-<%= link_to 'New Wallet Coin', new_wallet_coin_path %>
+<%= link_to 'Add Wallet Coin', new_wallet_coin_path %>
+<%= link_to 'Wallet', wallets_path %>

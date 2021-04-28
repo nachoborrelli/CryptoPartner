@@ -3,7 +3,7 @@ class WalletCoin < ApplicationRecord
   belongs_to :coin, foreign_key: 'coin_id'
 
   def to_s
-    "Coin: #{coin.api_key}, Amount: #{amount}"
+    "Coin: #{self.api_key}, Amount: #{amount}"
   end
 
   def api_key

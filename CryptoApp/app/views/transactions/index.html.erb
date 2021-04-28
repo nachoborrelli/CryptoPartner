@@ -12,7 +12,7 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td><%= transaction.wallet %></td>
+        <td><%= transaction %></td>
         <td><%= link_to 'Show', transaction %></td>
         <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
         <td><%= button_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
